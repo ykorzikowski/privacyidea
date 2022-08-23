@@ -17,6 +17,14 @@ if [ ! -f ${PI_CFG} ]; then
   echo "PI_LOGLEVEL = 20" >> ${PI_CFG}
 
   echo ${SQLALCHEMY_DATABASE_URI} >> ${PI_CFG}
+
+
+  ./pi-manage createdb
+  ./pi-manage create_enckey
+  ./pi-manage db stamp head -d migrations/
+  ./pi-manage create_audit_keys
+  ./pi-manage admin add admin # TODO: this is asking for password
+  
 fi
 
 gunicorn -b "0.0.0.0:8000" --workers=${WORKERS} "privacyidea.app:create_app()"
