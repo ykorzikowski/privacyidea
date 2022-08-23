@@ -7,4 +7,7 @@ services:
       SQLALCHEMY_DATABASE_URI: "pymysql://user:password@11.12.13.14/privacyideadb"
       PI_WORKERS: 4
     volumes:
-    - ./config:/config
+    - ./config:/etc/privacyidea
+    - ./logs:/logs
+    ports:
+    - 5000:8000
